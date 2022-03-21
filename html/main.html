@@ -1,0 +1,76 @@
+<html lang="en"><head>
+	<meta charset="UTF-8">
+	<title>识物APP</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body class="font" id="body">
+<div id="head" class="pos_rel">
+	<!-- 头部 -->
+	<div id="top" class="white pos_rel"><h2 class="txt_c f36 white_gray">识货商城</h2>
+            <a class="top_set pos_abs" href="./main.html"></a>
+    </div>
+	<!-- 搜索栏 -->
+	<div id="search_1" class="pos_rel">
+        
+		<a href="#" class="menu pos_abs" id="menuBtn"></a>  <!-- 点击此处会弹出商品列表 -->
+		<div class="search ml70">
+			<span class="txt"><input type="text" value="请输入搜索物品名称" id="input_txt" class="f20" onclick="this.value=''"></span>
+			<input type="submit" id="input_btn" value="搜索" class="pos_abs f32">
+		</div>
+        <span id="iconArrow" style="display: block;"></span>
+	</div>
+</div>
+<!-- 频道导航 -->
+<div id="menu_nav" class="bgc_white txt_c" style="display: none; z-index: 11; top: 179px; height: 1191px;">
+	<ul>
+		<li><a href="list_products.html">手机</a></li>
+		<li><a href="list_products.html">衣服</a></li>
+		<li><a href="list_products.html">配饰</a></li>
+		<li><a href="list_products.html">球鞋</a></li>
+		
+	</ul>
+</div>
+
+<!-- 广告位 -->
+<div class="ad"><img src="../images/image1.jpg" alt="广告位" title="广告位" class="full_img"></div>
+<!-- 导航 -->
+<ul id="nav" class="txt_c f32 mb30 clearfix">
+	<li><a href="#">首页</a></li>
+	<li class="cur"><a href="#">品牌</a></li>
+	<li><a href="#">特价</a></li>
+	<li><a href="#" class="no_backg">抢购</a></li>
+</ul>
+<!-- 产品 -->
+<div class="products">
+	<div class="pro_img"><img src="../images/image2.jpg" alt="产品图" title="产品图" class="full_img"></div>
+	<div class="pro_info">
+		<h3><a href="../html/products.html">IPHONE 13 pro max</a></h3>
+		<h4><a href="../html/products.html">全网通5G 双卡双待 白色</a></h4>
+		<div><span class="price">￥1</span><a href="#" class="more iconfont"></a></div>
+	</div>
+</div>
+<div class="products">
+	<div class="pro_img"><img src="../images/image3.jpg" alt="产品图" title="产品图" class="full_img"></div>
+	<div class="pro_info">
+		<h3><a href="../html/products.html">IPHONE 13 pro max</a></h3>
+		<h4><a href="../html/products.html">全网通5G 双卡双待 白色</a></h4>
+		<div><span class="price">￥1</span><a href="#" class="more iconfont"></a></div>
+	</div>
+</div>
+<div class="m100"></div>
+<ul id="bot_nav" class="clearfix">
+	<li class="cur"><a href="./main.html"><img src="../images/img_shopping.png" alt="主页"><!-- 主页 --></a></li>
+	<li><a href="./list_products.html"><img src="../images/img_search.png" alt="搜索"><!-- 搜索 --></a></li>
+	<li><a href="./carts.html"><img src="../images/img_cart.png" alt="购物车"><!-- 购物车 --></a></li>
+    <li><a href="./personal_center.html"><img src="../images/img_person.png" alt="个人中心"><!-- 个人中心 --></a></li>
+
+</ul>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript">
+	//导航
+	fnNav("menuBtn","menu_nav",'head');
+    
+</script>
+
+</body></html>

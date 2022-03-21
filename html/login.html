@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>登陆</title>
+	<link rel="stylesheet" href="../libs/particles/css/style.css">
+	<link rel="stylesheet" href="../css/base.css">
+	<link rel="stylesheet" href="../css/login.css" />
+	<style>
+		.input-val {
+			width: 200px;
+			height: 32px;
+			border: 1px solid #ddd;
+			box-sizing: border-box;
+			margin: 0px 0px 0 -96px;
+		}
+
+		#canvas {
+			margin: -32px 0px 0px 200px;
+			vertical-align: middle;
+			box-sizing: border-box;
+			border: 1px solid #ddd;
+			cursor: pointer;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- particles.js container -->
+	<div id="particles-js"></div>
+	<div id="wrapper">
+		<div>
+			<h1>识物商城</h1>
+			<!-- <h2>小绝与你分享知识、美食和动漫</h2> -->
+		</div>
+		<nav class="switch_nav">
+			<a href="./register.html" id="switch_signup" class="switch_btn">注册</a>
+			<a href="javascript:;" id="switch_login" class="switch_btn on">登录</a>
+			<div class="switch_bottom" id="switch_bottom"></div>
+		</nav>
+		<div id="login">
+			<form method="GET" action="login">
+				<ul class="group_input">
+					<li>
+						<a id="a1" style="margin: 0 0 0 40px;color: #67aad6;">手机登录</a><a id="a2"
+							style="margin: 0 0 0 81px;">邮箱登录</a>
+					</li>
+					<li>
+						<input type="text" class="mobile required" id="mobile" placeholder="手机号或邮箱"
+							name="phone_number" />
+					</li>
+					<li>
+						<input type="password" class="psd required" id="psd" placeholder="密码" name="password" />
+					</li>
+				</ul>
+				<div class="code">
+					  <input type="text" value="" placeholder="请输入验证码（不区分大小写）" class="input-val">
+				  <canvas id="canvas" width="100" height="30"></canvas>
+				</div>
+				<button style="background-color:#fa9a9a" type="submit" class="submit_btn" id="btnSubmit">
+					登录
+			    </button>
+			</form>
+			<a style="background-color:#fa9a9a" id="btn_forGetPs">忘记密码</a>
+		</div>
+	</div>
+	<script src="/libs/jquery-1.12.4/jquery.min.js"></script>
+	<script src="/libs/particles/particles.min.js"></script>
+	<script src="/libs/particles/js/app.js"></script>
+	<!-- <script src="../assets/libs/particles/js/lib/stats.js"></script> -->
+	<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+	<script>
+		$(function () {
+			var show_num = [];
+			draw(show_num);
+			$("#canvas").on('click', function () {
+				draw(show_num);
+			})
+			$(".submit_btn").on('click', function () {
+				var val = $(".input-val").val().toLowerCase();
+				var num = show_num.join("");
+				if (val == '') {
+					alert('请输入验证码！');
+					return false
+				} else if (val == num) {
+					alert('验证码正确！');
+					return true
+					$(".input-val").val('');
+					// draw(show_num);
+				} else {
+					alert('验证码错误！请重新输入！');
+					return false
+					$(".input-val").val('');
+					// draw(show_num);
+				}
+			})
+		})
+		//生成并渲染出验证码图形
+		function draw(show_num) {
+			var canvas_width = $('#canvas').width();
+			var canvas_height = $('#canvas').height();
+			var canvas = document.getElementById("canvas");//获取到canvas的对象，演员
+			var context = canvas.getContext("2d");//获取到canvas画图的环境，演员表演的舞台
+			canvas.width = canvas_width;
+			canvas.height = canvas_height;
+			var sCode = "a,b,c,d,e,f,g,h,i,j,k,m,n,p,q,r,s,t,u,v,w,x,y,z,A,B,C,E,F,G,H,J,K,L,M,N,P,Q,R,S,T,W,X,Y,Z,1,2,3,4,5,6,7,8,9,0";
+			var aCode = sCode.split(",");
+			var aLength = aCode.length;//获取到数组的长度
+			for (var i = 0; i < 4; i++) { //这里的for循环可以控制验证码位数（如果想显示6位数，4改成6即可）
+				var j = Math.floor(Math.random() * aLength);//获取到随机的索引值
+				// var deg = Math.random() * 30 * Math.PI / 180;//产生0~30之间的随机弧度
+				var deg = Math.random() - 0.5; //产生一个随机弧度
+				var txt = aCode[j];//得到随机的一个内容
+				show_num[i] = txt.toLowerCase();
+				var x = 10 + i * 20;//文字在canvas上的x坐标
+				var y = 20 + Math.random() * 8;//文字在canvas上的y坐标
+				context.font = "bold 23px 微软雅黑";
+				context.translate(x, y);
+				context.rotate(deg);
+				context.fillStyle = randomColor();
+				context.fillText(txt, 0, 0);
+				context.rotate(-deg);
+				context.translate(-x, -y);
+			}
+			for (var i = 0; i <= 5; i++) { //验证码上显示线条
+				context.strokeStyle = randomColor();
+				context.beginPath();
+				context.moveTo(Math.random() * canvas_width, Math.random() * canvas_height);
+				context.lineTo(Math.random() * canvas_width, Math.random() * canvas_height);
+				context.stroke();
+			}
+			for (var i = 0; i <= 30; i++) { //验证码上显示小点
+				context.strokeStyle = randomColor();
+				context.beginPath();
+				var x = Math.random() * canvas_width;
+				var y = Math.random() * canvas_height;
+				context.moveTo(x, y);
+				context.lineTo(x + 1, y + 1);
+				context.stroke();
+			}
+		}
+		//得到随机的颜色值
+		function randomColor() {
+			var r = Math.floor(Math.random() * 256);
+			var g = Math.floor(Math.random() * 256);
+			var b = Math.floor(Math.random() * 256);
+			return "rgb(" + r + "," + g + "," + b + ")";
+		}
+
+		$(function () {
+			$("#a1").click(function () {
+				var email = document.getElementById("email")
+				$("#a1").css("color", "#67aad6")
+				$("#a2").css("color", "#333")
+				email.id = "mobile"
+				email.placeholder = "手机号(仅支持中国大陆)"
+			})
+			$("#a2").click(function () {
+				var mobile = document.getElementById("mobile")
+				$("#a2").css("color", "#67aad6")
+				$("#a1").css("color", "#333")
+				mobile.id = "email"
+				mobile.placeholder = "输入正确邮箱"
+			})
+			//为表单的必填文本框添加提示信息（选择form中的所有后代input元素）
+			// $("form :input.required").each(function () {
+			//     //通过jquery api：$("HTML字符串") 创建jquery对象
+			//     var $required = $("<strong class='high'>*</strong>");
+			//     //添加到this对象的父级对象下
+			//     $(this).parent().append($required);
+			// });
+			// var errorMsg = $(".error-msg").text();
+			//为表单元素添加失去焦点事件
+			$("form :input").blur(function () {
+				var $parent = $(this).parent();
+				$parent.find(".msg").remove(); //删除以前的提醒元素（find()：查找匹配元素集中元素的所有匹配元素）		
+				//验证手机号
+				if ($(this).is("#mobile")) {
+					var mobileVal = $.trim(this.value);
+					var regMobile = /^1[3|4|5|7|8][0-9]{9}$/;
+					if (mobileVal == "" || !regMobile.test(mobileVal)) {
+						var errorMsg = " 请输入正确手机号！";
+						$parent.append("<span class='msg onError'>" + errorMsg + "</span>");
+					} else {
+						var okMsg = " 输入正确";
+						$parent.append("<span class='msg onSuccess'>" + okMsg + "</span>");
+					}
+				}
+				//验证邮箱
+				if ($(this).is("#email")) {
+					var mobileVal = $.trim(this.value);
+					var regexEmail = /^[a-zA-Z][\w\.-]+?@([\w\-]+\.){1,2}[a-zA-Z]{2,3}$/;
+					if (mobileVal == "" || !regexEmail.test(mobileVal)) {
+						var errorMsg = " 请输入有效的邮箱！";
+						$parent.append("<span class='msg onError'>" + errorMsg + "</span>");
+					} else {
+						var okMsg = " 输入正确";
+						$parent.append("<span class='msg onSuccess'>" + okMsg + "</span>");
+					}
+				}
+				//验证密码
+				if ($(this).is("#psd")) {
+					var psdVal = $.trim(this.value);
+					var regPsd = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
+					if (psdVal == "" || !regPsd.test(psdVal)) {
+						var errorMsg = " 密码为6-20位字母、数字的组合！";
+						$parent.append("<span class='msg onError'>" + errorMsg + "</span>");
+					}
+					else {
+						var okMsg = " 输入正确";
+						$parent.append("<span class='msg onSuccess'>" + okMsg + "</span>");
+					}
+				}
+			}).keyup(function () {
+				//triggerHandler 防止事件执行完后，浏览器自动为标签获得焦点
+				$(this).triggerHandler("blur");
+			}).focus(function () {
+				$(this).triggerHandler("blur");
+			});
+
+			//点击重置按钮时，通过trigger()来触发文本框的失去焦点事件
+			$("#btnSubmit").click(function () {
+				//trigger 事件执行完后，浏览器会为submit按钮获得焦点
+				$("form .required:input").trigger("blur");
+				var numError = $("form .onError").length;
+				if (numError) {
+					return false;
+				}
+				window.location.href = '/login'
+			});
+		})
+
+	</script>
+</body>
+
+</html>
